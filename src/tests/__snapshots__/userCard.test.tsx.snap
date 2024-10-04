@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserCard Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="chakra-card css-2dlz7"
+    data-testid="user"
+  >
+    <div
+      class="chakra-card__body css-0"
+    >
+      <img
+        alt="john.doe@example.com"
+        class="chakra-image css-gnhd0a"
+        src="https://example.com/image.jpg"
+      />
+      <div
+        class="chakra-stack css-29dqc6"
+      >
+        <h2
+          class="chakra-heading css-1e61p8h"
+        >
+          @johndoe
+        </h2>
+        <div
+          class="chakra-stack css-1f0wxn3"
+        >
+          <p
+            class="chakra-text css-ty7r4z"
+          >
+            First name:
+          </p>
+          <p
+            class="chakra-text css-0"
+          >
+            John
+          </p>
+        </div>
+        <div
+          class="chakra-stack css-1f0wxn3"
+        >
+          <p
+            class="chakra-text css-ty7r4z"
+          >
+            Last name:
+          </p>
+          <p
+            class="chakra-text css-0"
+          >
+            Doe
+          </p>
+        </div>
+        <p
+          class="chakra-text css-0"
+        >
+          john.doe@example.com
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
