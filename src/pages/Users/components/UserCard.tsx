@@ -1,16 +1,4 @@
-import {
-  Card,
-  CardBody,
-  Stack,
-  Heading,
-  Divider,
-  CardFooter,
-  ButtonGroup,
-  Button,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-import React from "react";
+import { Card, CardBody, Stack, Heading, Image, Text } from "@chakra-ui/react";
 
 interface IUserCardProps {
   id: number;
@@ -33,7 +21,7 @@ const UserCard = ({
       <CardBody>
         <Image margin={"auto"} src={image} alt={email} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-          <Heading color="blue.600" size="md" textAlign={"center"}>
+          <Heading color="#DD6B20" size="md" textAlign={"center"}>
             @{username}
           </Heading>
           <Stack flexDir="row">
@@ -44,7 +32,10 @@ const UserCard = ({
             <Text fontWeight={"800"}>Last name:</Text>
             <Text>{lastName}</Text>
           </Stack>
-          <Text>{email}</Text>
+          <Stack>
+            <Text fontWeight={"800"}>Email:</Text>
+            <Text>{email}</Text>
+          </Stack>
         </Stack>
       </CardBody>
     </Card>

@@ -8,22 +8,24 @@ import {
   HStack,
   Select,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { userActions } from "../../../store/reducers/user";
 import useUserService from "../../../services/UserService";
+import Slideshow from "./Slideshow";
 
-interface IUserListProps {
-  users: IUser[];
-}
-
-const UserList = ({ users }: IUserListProps) => {
+const UserList = () => {
   const dispatch = useDispatch();
   const { getAllUsers } = useUserService();
-  const { total, skip, limit } = useSelector((state: RootState) => state.user);
+  const { users, total, skip, limit } = useSelector(
+    (state: RootState) => state.user
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [currentSkip, setcurrentSkip] = useState(skip);
+  const [currentLimit, setcurrentLimit] = useState(limit);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,21 +34,23 @@ const UserList = ({ users }: IUserListProps) => {
       setLoading(false);
     };
     fetchUsers();
-  }, [skip, limit]);
+  }, [currentSkip, currentLimit]);
 
   const totalPages = Math.ceil(total / limit);
 
   const handlePrevious = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      dispatch(userActions.setSkip(skip - limit));
+      dispatch(userActions.setSkip(currentSkip - currentLimit));
+      setcurrentSkip(currentSkip - currentLimit);
     }
   };
 
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      dispatch(userActions.setSkip(skip + limit));
+      dispatch(userActions.setSkip(currentLimit + currentSkip));
+      setcurrentSkip(currentLimit + currentSkip);
     }
   };
 
@@ -54,6 +58,8 @@ const UserList = ({ users }: IUserListProps) => {
     const newLimit = Number(value);
     dispatch(userActions.setLimit(newLimit));
     dispatch(userActions.setSkip(0));
+    setcurrentLimit(newLimit);
+    setcurrentSkip(0);
     setCurrentPage(1);
   };
 
@@ -80,14 +86,21 @@ const UserList = ({ users }: IUserListProps) => {
           Next
         </Button>
       </HStack>
+      <Text fontWeight={"bold"}>Total users: {total}</Text>
       {loading ? (
         <Spinner />
+      ) : users.length > 0 ? (
+        <>
+          <div data-testid="user-list" className="grid-container">
+            {users.map((el: IUser) => (
+              <UserCard key={el.id} {...el} />
+            ))}
+          </div>
+
+          <Slideshow users={users} />
+        </>
       ) : (
-        <div data-testid="user-list" className="grid-container">
-          {users.map((el: IUser) => (
-            <UserCard key={el.id} {...el} />
-          ))}
-        </div>
+        <Heading data-testid="noUsers">No users matched</Heading>
       )}
     </>
   );

@@ -1,21 +1,27 @@
 import { Box, FormLabel, Input } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import useUserService from "../../../services/UserService";
 
-interface ISearchUser {
-  onSearch: (query: string) => void;
-}
-
-const SearchUser = ({ onSearch }: ISearchUser) => {
+const SearchUser = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { getAllUsers, getFilteredUsers } = useUserService();
+
+  const handleSearch = async (query: string) => {
+    if (query) {
+      await getFilteredUsers(query);
+    } else {
+      await getAllUsers();
+    }
+  };
 
   useEffect(() => {
     if (!searchTerm) {
-      onSearch("");
+      handleSearch("");
       return;
     }
 
     const handler = setTimeout(() => {
-      onSearch(searchTerm);
+      handleSearch(searchTerm);
     }, 500);
 
     return () => {

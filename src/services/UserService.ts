@@ -11,7 +11,7 @@ interface IApiResponse {
   limit: number;
 }
 const useUserService = () => {
-  const { get, post, put } = ApiUtils();
+  const { get } = ApiUtils();
   const dispatcher = useDispatch();
   const { skip, limit } = useSelector((s: RootState) => s.user);
 

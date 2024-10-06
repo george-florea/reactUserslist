@@ -13,9 +13,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state: any, action) {
-      for (let key of Object.keys(action.payload)) {
-        state[key] = action.payload[key];
-      }
+      state.users = action.payload.users;
+      state.total = action.payload.total;
     },
     setSkip(state, action) {
       state.skip = action.payload;
